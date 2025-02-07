@@ -1,3 +1,4 @@
+import os  # Ensure this is at the top
 import discord
 import requests
 import openai
@@ -7,7 +8,6 @@ import wave
 import io
 from discord.ext import commands
 from gtts import gTTS
-import os
 
 # Your API keys (hardcoded for this example)
 DISCORD_TOKEN = "MTMzNjAzMDM3ODU4MTgyMzU0MA.GvkV5n.uVyBQ2CqvWYsxRt3znerFmdrur62_Ut9wooEDk"
