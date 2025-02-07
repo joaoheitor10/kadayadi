@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-import os  # Ensure this is at the top
+import os
 import discord
 import requests
 import openai
@@ -9,9 +9,11 @@ import wave
 import io
 from discord.ext import commands
 from gtts import gTTS
+import asyncio  # Import asyncio
 
 load_dotenv()
 
+# Load API keys from environment variables
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PERSPECTIVE_API_KEY = os.getenv("PERSPECTIVE_API_KEY")
@@ -75,39 +77,35 @@ def generate_voice_alert(player_name):
 async def on_voice_state_update(member, before, after):
     if after.channel:  # When user joins a voice channel
         print(f"{member.name} joined {after.channel.name}")
-        await after.channel.connect()
+        if member != client.user:  # Prevent the bot from connecting to a channel it is already in
+            await after.channel.connect()
 
-# Event to capture audio from voice channel (this is simplified for this example)
-@client.event
-async def on_voice_server_update(self, data):
-    print("Capturing voice data...")
-
-# Function to capture audio (simplified version for example)
+# Function to capture audio from voice channel (simplified version for example)
 async def capture_audio(vc):
     while True:
         # Capture raw audio data from the voice channel
-        audio_data = await vc.recv()  # Receiving voice data
+        audio_data = await vc.recv()  # This is where you need to handle actual audio input
 
-        # Assuming audio_data is in a WAV format or raw byte data
-        with io.BytesIO(audio_data):
-            # Send to transcription service (Malayalam speech transcription)
-            transcribed_text = transcribe_audio(audio_data)
+        if audio_data:
+            with io.BytesIO(audio_data):
+                # Send to transcription service (Malayalam speech transcription)
+                transcribed_text = transcribe_audio(audio_data)
         
-        if transcribed_text:
-            print(f"Transcribed (Malayalam): {transcribed_text}")
-            
-            # Translate from Malayalam to English
-            translated_text = translate_to_english(transcribed_text)
-            print(f"Translated (English): {translated_text}")
-            
-            # Check toxicity
-            toxicity = analyse_toxicity(translated_text)
-            if toxicity and toxicity > 0.75:
-                print(f"Toxic behavior detected!")
-                # Send toxicity warning or TTS message here
-                await vc.channel.send(f"🚨 {vc.channel.guild.owner} is being toxic!")
-                voice_alert = generate_voice_alert(vc.channel.guild.owner)
-                vc.play(voice_alert)
+            if transcribed_text:
+                print(f"Transcribed (Malayalam): {transcribed_text}")
+                
+                # Translate from Malayalam to English
+                translated_text = translate_to_english(transcribed_text)
+                print(f"Translated (English): {translated_text}")
+                
+                # Check toxicity
+                toxicity = analyse_toxicity(translated_text)
+                if toxicity and toxicity > 0.75:
+                    print(f"Toxic behavior detected!")
+                    # Send toxicity warning or TTS message here
+                    await vc.channel.send(f"🚨 {vc.channel.guild.owner} is being toxic!")
+                    voice_alert = generate_voice_alert(vc.channel.guild.owner)
+                    vc.play(voice_alert)
         
         await asyncio.sleep(1)
 
