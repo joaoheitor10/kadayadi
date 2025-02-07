@@ -9,7 +9,7 @@ from discord.ext import commands
 from gtts import gTTS
 import os
 
-# Your API keys
+# Your API keys (hardcoded for this example)
 DISCORD_TOKEN = "MTMzNjAzMDM3ODU4MTgyMzU0MA.GvkV5n.uVyBQ2CqvWYsxRt3znerFmdrur62_Ut9wooEDk"
 OPENAI_API_KEY = "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"
 PERSPECTIVE_API_KEY = "AIzaSyAGOFZpzh6oY-MR8n1m6eF4SANvUvY7HrE"
