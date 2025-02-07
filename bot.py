@@ -110,4 +110,4 @@ async def capture_audio(vc):
         await asyncio.sleep(1)
 
 # Run the bot using the hardcoded token
-client.run(MTMzNjAzMDM3ODU4MTgyMzU0MA.GvkV5n.uVyBQ2CqvWYsxRt3znerFmdrur62_Ut9wooEDk)
+client.run(DISCORD_TOKEN)
