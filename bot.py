@@ -7,18 +7,15 @@ import wave
 import io
 from discord.ext import commands
 from gtts import gTTS
-from dotenv import load_dotenv
+import os
 
-# Load environment variables
-load_dotenv()
-
-# Your API keys (make sure these are in your .env file)
-DISCORD_TOKEN = os.getenv("MTMzNjAzMDM3ODU4MTgyMzU0MA.GvkV5n.uVyBQ2CqvWYsxRt3znerFmdrur62_Ut9wooEDk")
-OPENAI_API_KEY = os.getenv("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")
-PERSPECTIVE_API_KEY = os.getenv("AIzaSyAGOFZpzh6oY-MR8n1m6eF4SANvUvY7HrE")
+# Your API keys
+DISCORD_TOKEN = "MTMzNjAzMDM3ODU4MTgyMzU0MA.GvkV5n.uVyBQ2CqvWYsxRt3znerFmdrur62_Ut9wooEDk"
+OPENAI_API_KEY = "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"
+PERSPECTIVE_API_KEY = "AIzaSyAGOFZpzh6oY-MR8n1m6eF4SANvUvY7HrE"
 
 # Set up OpenAI API Key
-openai.api_key = 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
+openai.api_key = OPENAI_API_KEY
 
 # Initialize the bot
 intents = discord.Intents.default()
@@ -112,5 +109,5 @@ async def capture_audio(vc):
         
         await asyncio.sleep(1)
 
-# Run the bot
+# Run the bot using the hardcoded token
 client.run(MTMzNjAzMDM3ODU4MTgyMzU0MA.GvkV5n.uVyBQ2CqvWYsxRt3znerFmdrur62_Ut9wooEDk)
